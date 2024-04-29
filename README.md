@@ -1,4 +1,4 @@
-# React + TypeScript + Vite
+ # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
@@ -28,3 +28,19 @@ export default {
 - Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
 - Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
 - Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+
+
+ ## Que es React Query
+
+ React Query o también TanStack Query es una librería para obtener datos del servidor.
+
+ Sus ventajas principales son que obtiene los datos de forma optimizada y rápida; además cachea las consultas, sincroniza / actualiza los datos del servidor de forma simple.
+
+ Se puede actualizar con Fetch API o Axios.
+
+ ### Términos en React Query
+
+ React Query introduce una gran cantidad de conceptos nuevos; pero hay 2 que son los más importantes:
+
+ - Queries: Se utilizan para obtener datos de un servidor o una API (GET)
+ - Mutations: Se utilizan para crear / actualizar / eliminar datos en el servidor (POST, PUT, PATCH, DELETE)
