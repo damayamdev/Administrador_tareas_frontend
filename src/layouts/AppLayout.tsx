@@ -11,7 +11,7 @@ const AppLayout = () => {
 
   if (isLoading) {
     return (
-      <div className="w-full flex items-center justify-center relative">
+      <div className="w-full h-screen flex items-center justify-center relative">
         <Spinner />
       </div>
     );
