@@ -18,6 +18,8 @@ export default function EditTaskModal({ data: data, taskId }: EditTaskModalProps
   const projectId = params.projectId!;
   const navigate = useNavigate();
 
+  console.log(data)
+
   const {
     register,
     handleSubmit,

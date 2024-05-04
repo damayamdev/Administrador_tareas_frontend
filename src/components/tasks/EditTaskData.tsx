@@ -20,7 +20,7 @@ const EditTaskData = () => {
 
     if (isError) return <Navigate to={'/404'} />
 
-  if (data) return <EditTaskModal data={data.data} taskId={taskId} />
+  if (data) return <EditTaskModal data={data} taskId={taskId} />
 }
 
 export default EditTaskData
