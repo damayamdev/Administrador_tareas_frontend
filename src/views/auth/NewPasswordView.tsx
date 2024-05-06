@@ -4,13 +4,10 @@ import NewPasswordForm from "@/components/auth/NewPasswordForm";
 import { useState } from "react";
 import { ConfirmToken } from "@/types/index";
 
-export default function () {
+export default function NewPasswordView() {
 
   const [token, setToken] = useState<ConfirmToken['token']>('')
   const [isValidToken, setIsValidToken] = useState(false)
-
-  const handleChange = (token: string) => {};
-  const handleComplete = (token: string) => {};
 
   return (
     <>
