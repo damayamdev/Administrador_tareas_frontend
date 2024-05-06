@@ -12,6 +12,8 @@ import { toast } from "react-toastify";
 import { formatDate } from "@/utils/utils";
 import { statusTranslation } from "@/locales/es";
 import { TaskStatus } from "@/types/index";
+import NotesPanel from "../notes/NotesPanel";
+import AcordionHistory from "./AcordionHistory";
 
 export default function TaskModalDetails() {
   const params = useParams();
@@ -30,23 +32,23 @@ export default function TaskModalDetails() {
     retry: false,
   });
 
-  const queryClient = useQueryClient()
-  const {mutate} = useMutation({
+  const queryClient = useQueryClient();
+  const { mutate } = useMutation({
     mutationFn: updateStatus,
     onError: (error) => {
       toast.error(error.message);
     },
     onSuccess: ({ Msg }) => {
       toast.success(Msg);
-      queryClient.invalidateQueries({queryKey: ["project", projectId]})
-      queryClient.invalidateQueries({queryKey: ["task", taskId]})
+      queryClient.invalidateQueries({ queryKey: ["project", projectId] });
+      queryClient.invalidateQueries({ queryKey: ["task", taskId] });
     },
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const status = e.target.value as TaskStatus
-    const data = {projectId, taskId, status}
-    mutate(data)
+    const status = e.target.value as TaskStatus;
+    const data = { projectId, taskId, status };
+    mutate(data);
   };
 
   if (isError) {
@@ -93,6 +95,7 @@ export default function TaskModalDetails() {
                     <p className="text-sm text-slate-400">
                       Última actualización: {formatDate(data.updatedAt)}
                     </p>
+
                     <Dialog.Title
                       as="h3"
                       className="font-black text-4xl text-slate-600 my-5"
@@ -102,12 +105,14 @@ export default function TaskModalDetails() {
                     <p className="text-lg text-slate-500 mb-2">
                       Descripción: {data.description}
                     </p>
+
                     <div className="my-5 space-y-3">
                       <label className="font-bold">
-                        Estado Actual: {data.status}
+                        Estado Actual: {statusTranslation[data.status]}
                       </label>
+
                       <select
-                        className="w-full p-3 bg-white border border-gray-300"
+                        className="w-full p-3 rounded-lg focus:outline-none bg-white border border-gray-300"
                         defaultValue={data.status}
                         onChange={handleChange}
                       >
@@ -120,6 +125,8 @@ export default function TaskModalDetails() {
                         )}
                       </select>
                     </div>
+                    {data.completedBy.length ? <AcordionHistory data={data} /> : null}
+                    <NotesPanel notes={data.notes}/>
                   </Dialog.Panel>
                 </Transition.Child>
               </div>

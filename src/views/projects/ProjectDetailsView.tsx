@@ -1,6 +1,6 @@
 import { useParams, Navigate, useNavigate, Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getProjectById } from "@/services/ProjectAPI";
+import { getFullProject } from "@/services/ProjectAPI";
 import Spinner from "@/components/spinner/Spinner";
 import AddTaskModal from "@/components/tasks/AddTaskModal";
 import TaskList from "@/components/tasks/TaskList";
@@ -18,10 +18,10 @@ const ProjectDetailsView = () => {
 
   const { data, isError, isLoading } = useQuery({
     queryKey: ["project", projectId],
-    queryFn: () => getProjectById(projectId),
+    queryFn: () => getFullProject(projectId),
     retry: false,
   });
-  const conEdit = useMemo(() => data?.data?.manager === user?._id, [data, user])
+  const conEdit = useMemo(() => data?.manager === user?._id, [data, user])
 
   return (
     <>
@@ -33,11 +33,11 @@ const ProjectDetailsView = () => {
       {isError && <Navigate to="/404" />}
       {data && user && (
         <>
-          <h1 className="text-5xl font-black">{data.data.projectName}</h1>
+          <h1 className="text-5xl font-black">{data.projectName}</h1>
           <p className="text-2xl font-light text-gray-500 mt-5">
-            {data.data.description}
+            {data.description}
           </p>
-          {isManager(data.data.manager, user._id) && (
+          {isManager(data.manager, user._id) && (
             <nav className="mt-5 flex gap-3">
               <button
                 onClick={() => navigate(location.pathname + "?newTask=true")}
@@ -55,7 +55,7 @@ const ProjectDetailsView = () => {
             </nav>
           )}
 
-          <TaskList tasks={data.data.tasks} conEdit={conEdit} />
+          <TaskList tasks={data.tasks} conEdit={conEdit} />
           <AddTaskModal />
           <EditTaskData />
           <TaskModalDetails />

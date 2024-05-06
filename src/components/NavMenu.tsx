@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { Popover, Transition } from '@headlessui/react'
 import { Bars3Icon } from '@heroicons/react/20/solid'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { User } from '../types'
 import { useQueryClient } from '@tanstack/react-query'
 

@@ -25,7 +25,7 @@ const EditProjectView = () => {
         isError && <Navigate to='/404' />
       }
       {
-        data && <EditProjectForm  data={data.data}/>
+        data && <EditProjectForm  data={data}/>
       }
     </>
   );

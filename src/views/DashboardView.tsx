@@ -1,34 +1,25 @@
 import Spinner from "@/components/spinner/Spinner";
-import { deleteProject, getProjects } from "@/services/ProjectAPI";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { getProjects } from "@/services/ProjectAPI";
+import { useQuery } from "@tanstack/react-query";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Fragment } from "react";
-import { toast } from "react-toastify";
 import { Menu, Transition } from "@headlessui/react";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import { useAuth } from "@/hooks/useAuth";
 import { isManager } from "@/utils/policies";
+import DeleteProjectModal from "@/components/projects/DeleteProjectModal";
 
 const DashboardView = () => {
-  const { data, isError, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["projects"],
     queryFn: getProjects,
   });
 
   const { data: user, isLoading: authLoading } = useAuth();
 
-  const queryClient = useQueryClient();
-
-  const { mutate } = useMutation({
-    mutationFn: deleteProject,
-    onError: (error) => {
-      toast.error(error.message);
-    },
-    onSuccess: ({ Msg }) => {
-      queryClient.invalidateQueries({ queryKey: ["projects"] });
-      toast.success(Msg);
-    },
-  });
+  const location = useLocation()
+  const navigate = useNavigate()
+ 
 
   if (data && user)
     return (
@@ -123,7 +114,7 @@ const DashboardView = () => {
                                   <button
                                     type="button"
                                     className="block px-3 py-1 text-sm leading-6 text-red-500"
-                                    onClick={() => mutate(project._id)}
+                                    onClick={() => navigate(location.pathname + `?deleteProject=${project._id}`)}
                                   >
                                     Eliminar Proyecto
                                   </button>
@@ -149,6 +140,8 @@ const DashboardView = () => {
                 </Link>
               </p>
             )}
+
+            <DeleteProjectModal />
           </>
         )}
       </>
